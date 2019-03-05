@@ -1,0 +1,29 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environment": {
+            "metadata": {
+                "description": "Deployment environment ; used in the vault's secret names"
+            },
+            "type": "string"
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "name": "[concat('central-insight-', parameters('environment'))]",
+            "type": "microsoft.insights/components",
+            "apiVersion": "2015-05-01",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "kind": "web",
+            "properties": {
+                "Application_Type": "web"
+            },
+            "dependsOn": []
+        }
+    ],
+    "outputs": {}
+}
