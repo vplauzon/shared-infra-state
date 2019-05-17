@@ -20,7 +20,7 @@
             "type": "Microsoft.OperationalInsights/workspaces",
             "name": "[variables('workspace-name')]",
             "apiVersion": "2015-11-01-preview",
-            "location": "canadacentral",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "sku": {
                     "name": "PerGB2018"
