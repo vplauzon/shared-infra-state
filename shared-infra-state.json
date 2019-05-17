@@ -4,17 +4,33 @@
     "parameters": {
         "environment": {
             "metadata": {
-                "description": "Deployment environment ; used in the vault's secret names"
+                "description": "Deployment environment ; used in the App Insights & Log Analytics's names"
             },
             "type": "string"
         }
     },
     "variables": {
+        "workspace-prefix": "central-log-",
+        "workspace-name": "[concat(variables('workspace-prefix'), parameters('environment'))]",
+        "app-insights-prefix": "central-insight-",
+        "app-insights-name": "[concat(variables('app-insights-prefix'), parameters('environment'))]"
     },
     "resources": [
         {
-            "name": "[concat('central-insight-', parameters('environment'))]",
-            "type": "microsoft.insights/components",
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "name": "[variables('workspace-name')]",
+            "apiVersion": "2015-11-01-preview",
+            "location": "canadacentral",
+            "properties": {
+                "sku": {
+                    "name": "PerGB2018"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Insights/components",
+            "name": "[variables('app-insights-name')]",
             "apiVersion": "2015-05-01",
             "location": "[resourceGroup().location]",
             "tags": {},
